@@ -7,10 +7,42 @@
 <body>
     <script>
 
+        var canvasW = 1000; //canvas width
+        var canvasH = 750;  //canvas height
+        var defCanvasW = 1000;  //default canvas width
+        var defCanvasH = 750;   //default canvas height
+        var rmateColours = [
+            [190, 136, 255],    //light purple - Arik
+            [255, 0, 0],    //red - James
+            [255, 0, 255],  //magenta - Matthew
+            [0, 255, 0],    //lime - Michael
+            [0, 255, 255],  //cyan - Sougata
+        ];
+
+        //Convert an x-distance to an adjusted x-dist based on canvasW
+        function adjX(defX) {
+            return(canvasW / (defCanvasW / defX));
+        }
+        //Convert a y-distance to an adjusted y-dist based on canvasH
+        function adjY(defY) {
+            return(canvasH / (defCanvasH / defY));
+        }
+
         function setup() {
-            createCanvas(1000, 750);
-            background(100);
+            createCanvas(canvasW, canvasH);
             
+            //Create drop-down selection field for filtering debt history
+            sel = createSelect();
+            sel.position(adjX(25) + 7, adjY(400));
+            sel.option("Filter by Indebted");
+            sel.disable("Filter by Indebted");
+            sel.selected("Filter by Indebted");
+            sel.option("Show All");
+            sel.option("Arik");
+            sel.option("James");
+            sel.option("Matthew");
+            sel.option("Michael");
+            sel.option("Sougata");
             // button = createButton("RESET");
             // button.size(60, 25);
             // button.position(sqSize * gridWidth + offset + 30, 10 + offset);
@@ -18,7 +50,39 @@
         }
 
         function draw() {
+            //create the background in grey
+            background(100);
 
+            //Adjust colour scheme of debt history depending on roomate filter
+            rmate = sel.value();
+            text(rmate,100,100);
+            switch(rmate) {
+
+                case "Arik":
+                    fill(rmateColours[0]);
+                    break;
+
+                case "James":
+                    fill(rmateColours[1]);
+                    break;
+                
+                case "Matthew":
+                    fill(rmateColours[2]);
+                    break;
+
+                case "Michael":
+                    fill(rmateColours[3]);
+                    break;
+
+                case "Sougata":
+                    fill(rmateColours[4]);
+                    break;
+
+                default:
+                    fill(200);
+            }
+            noStroke();
+            rect(adjX(25), adjY(420), adjX(950), 305);
         }
 
     </script>
